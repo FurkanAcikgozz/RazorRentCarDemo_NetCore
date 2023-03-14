@@ -1,8 +1,13 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using RazorRentCarDemo_NetCore.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
+builder.Services.AddDbContext<RentDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RentDbContext") ?? throw new InvalidOperationException("Connection string 'RentDbContext' not found.")));
+//?? işareti null ise demek
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

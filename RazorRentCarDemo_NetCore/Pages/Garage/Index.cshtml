@@ -1,0 +1,62 @@
+﻿@page
+@model RazorRentCarDemo_NetCore.Pages.Garage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Car[0].Brand)*@
+                Brand
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Car[0].UnitPrace)*@
+                UnitPrace
+            </th>
+            <th class="text-center">
+                @*@Html.DisplayNameFor(model => model.Car[0].Avaliable)*@
+                Avaliable
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Car) {
+        <tr>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Brand)*@
+                @item.Brand
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.UnitPrace)*@
+                    @item.UnitPrace
+
+            </td>
+            <td class="text-center">
+                @*@Html.DisplayFor(modelItem => item.Avaliable)*@
+
+                    @{
+
+                        var result = item.Avaliable ? "OK" : "N/A";
+
+                    }
+                    @result
+
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
