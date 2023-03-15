@@ -15,6 +15,7 @@ namespace RazorRentCarDemo_NetCore.Data
         }
 
         public DbSet<Car> Car { get; set; } = default!;
+        public DbSet<Rezervation> Rez { get; set; }
 
         
         //convercion

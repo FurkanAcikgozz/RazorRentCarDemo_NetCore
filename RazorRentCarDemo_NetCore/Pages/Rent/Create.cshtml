@@ -1,0 +1,49 @@
+﻿@page
+@model RazorRentCarDemo_NetCore.Pages.Rent.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Rezervation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Rezervation.CustomerName" class="control-label"></label>
+                <input asp-for="Rezervation.CustomerName" class="form-control" />
+                <span asp-validation-for="Rezervation.CustomerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rezervation.Start" class="control-label"></label>
+                <input asp-for="Rezervation.Start" class="form-control" />
+                <span asp-validation-for="Rezervation.Start" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rezervation.End" class="control-label"></label>
+                <input asp-for="Rezervation.End" class="form-control" />
+                <span asp-validation-for="Rezervation.End" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rezervation.TotalPrice" class="control-label"></label>
+                <input asp-for="Rezervation.TotalPrice" class="form-control" />
+                <span asp-validation-for="Rezervation.TotalPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

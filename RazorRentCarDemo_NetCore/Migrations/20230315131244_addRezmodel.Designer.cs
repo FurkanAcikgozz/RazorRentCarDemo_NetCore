@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RazorRentCarDemo_NetCore.Data;
 
@@ -11,9 +12,10 @@ using RazorRentCarDemo_NetCore.Data;
 namespace RazorRentCarDemo_NetCore.Migrations
 {
     [DbContext(typeof(RentDbContext))]
-    partial class RentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230315131244_addRezmodel")]
+    partial class addRezmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
