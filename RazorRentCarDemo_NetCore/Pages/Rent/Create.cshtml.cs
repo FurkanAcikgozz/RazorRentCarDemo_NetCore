@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorRentCarDemo_NetCore.Data;
 using RazorRentCarDemo_NetCore.Model;
 
@@ -12,34 +8,61 @@ namespace RazorRentCarDemo_NetCore.Pages.Rent
 {
     public class CreateModel : PageModel
     {
-        private readonly RazorRentCarDemo_NetCore.Data.RentDbContext _context;
+        public Car Cars { get; set; }
 
-        public CreateModel(RazorRentCarDemo_NetCore.Data.RentDbContext context)
+        [BindProperty]
+        public string CustomerName { get; set; }
+        [BindProperty]
+        public int CarId { get; set; }
+
+        //[BindProperty]
+        //public Rezervation Rezervation { get; set; }
+
+
+        private readonly RentDbContext _context;
+        public CreateModel(RentDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int id)
         {
+            Cars = _context.Car.Find(id);
+
+            if (Cars == null) return NotFound();
+
             return Page();
+
         }
 
-        [BindProperty]
-        public Rezervation Rezervation { get; set; }
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Rez.Add(Rezervation);
-            await _context.SaveChangesAsync();
+            var carGarage = _context.Car.Find(CarId);
 
-            return RedirectToPage("./Index");
+            if (carGarage != null)
+            {
+
+                carGarage.Avaliable = false;
+                _context.Car.Update(carGarage);
+
+                Rezervation res = new();
+                res.Car = carGarage;
+                res.Start = DateTime.Now;
+                res.CustomerName = CustomerName;
+                _context.Rez.Add(res);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("./Index");
+            }
+
+            return Page();
         }
+
     }
 }

@@ -1,0 +1,18 @@
+﻿@page
+@model RazorRentCarDemo_NetCore.Pages.Rent.ReturnProcModel
+@{
+}
+
+
+<ul>
+    <li>@Model.Reservation?.Car.Brand</li>
+    <li>@Model.Reservation?.Car.UnitPrace</li>
+</ul>
+
+<ul>
+    <li>@Model.Reservation?.CustomerName</li>
+    <li>@Model.Reservation?.Start</li>
+    <li>@Model.Reservation?.TotalPrice (estimated)</li>
+</ul>
+
+<a asp-page="ReturnProc" asp-page-handler="ReturnOK" asp-route-id="@Model.Reservation?.ID" class=" btn btn-danger">RETURN!</a>
