@@ -3,12 +3,24 @@
 
 @{
     ViewData["Title"] = "Add Car";
+
+    //tiny editor
+    <script src="https://cdn.tiny.cloud/1/f0mnuv7dss7y3zfwou1drnrfyzdghfzold3yh1iwwnpuqnur/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+    //TempData["success"]="sad";
+
+    if (TempData["success"] is not null)
+    {
+        <h3>@TempData["success"]</h3>
+    }
+
 }
 
 
 <h4>Add Car</h4>
 <hr />
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -23,16 +35,22 @@
                 <span asp-validation-for="Car.UnitPrace" class="text-danger"></span>
             </div>
 
+            <div class="form-group my-2">
 
-           @* <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Car.Avaliable" /> @Html.DisplayNameFor(model => model.Car.Avaliable)
-                </label>
+                <select asp-for="CStateEnum"
+                        asp-items="Html.GetEnumSelectList<CarState>()" class="form-control">
+                            <option value="0">--- Select One From Enum ---</option>
+                </select>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="form-group my-2">
+
+                <select asp-for="CStateListSelection"
+                        asp-items="@Model.CarStateList" class="form-control">
+                    <option value="0">--- Select One  From List---</option>
+                </select>
             </div>
-                *@
+
 
             <div class="form-group form-check my-2">
                 <label class="form-check-label">
@@ -44,13 +62,73 @@
             </div>
         </form>
     </div>
-</div>
+</div>*@
 
-<div>
-    @*<a asp-page="Index">Back to List</a>*@
-    <a asp-page="Index" class="btn btn-outline-primary ">Back to List</a>
-</div>
+
+
+
+
+<form method="post">
+    <div class="row">
+        <div class="col-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group my-2">
+                <label asp-for="Car.Brand" class="control-label"></label>
+                <input asp-for="Car.Brand" class="form-control" />
+                <span asp-validation-for="Car.Brand" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="Car.UnitPrace" class="control-label"></label>
+                <input asp-for="Car.UnitPrace" class="form-control" />
+                <span asp-validation-for="Car.UnitPrace" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <select asp-for="CStateEnum" asp-items="Html.GetEnumSelectList<CarState>()" class="form-control">
+                    <option value="">-- Select One from enum --- </option>
+                </select>
+            </div>
+            <div class="form-group my-2">
+                <select asp-for="CStateListSelection" asp-items="@Model.CarStateList" class="form-control">
+                    <option value="">-- Select One from list --- </option>
+                </select>
+            </div>
+            <div class="form-group form-check my-2">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.Car.Avaliable" /> Avaliable
+                </label>
+            </div>
+        </div>
+
+
+        <div class="col-6">
+            <div class="form-group">
+                <label asp-for="@Model.TestText">Notes</label>
+                <textarea class="form-control" asp-for="@Model.TestText" rows="8"></textarea>
+            </div>
+            <div class="form-group my-2">
+                <input type="submit" value="Add" class="btn btn-primary w-50" />
+            </div>
+            <div>
+                <a asp-page="Index" class="btn btn-outline-primary w-50">Back to List</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    });
+</script>
+
+
+
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

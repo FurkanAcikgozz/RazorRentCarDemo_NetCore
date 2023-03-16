@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,11 +7,40 @@ using RazorRentCarDemo_NetCore.Model;
 
 namespace RazorRentCarDemo_NetCore.Pages.Garage
 {
+    public enum CarState
+    {
+        [Display(Name ="Avaliable For Rent")]
+        Avaliable = 1,
+        [Display(Name = "Avaliable For Not Rent")]
+        NotAvaliable = 2,
+        [Display(Name = "Rented")]
+        Rented = 3
+    }
     public class CreateModel : PageModel
     {
-        private readonly RazorRentCarDemo_NetCore.Data.RentDbContext _context;
+        private readonly RentDbContext _context;
 
-        public CreateModel(RazorRentCarDemo_NetCore.Data.RentDbContext context)
+        [BindProperty] //post ile alıyoruz
+        public CarState CStateEnum { get; set; }
+        [BindProperty]//post ile alıyoruz
+        public string CStateListSelection { get; set; }
+
+
+        [BindProperty]
+        public string TestText { get; set; }
+
+
+        //Get ile dolduruyoruz
+        public List<SelectListItem> CarStateList { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "MX", Text = "Avaliable" },
+            new SelectListItem { Value = "CA", Text = "NotAvaliable" },
+            new SelectListItem { Value = "US", Text = "Rented"  },
+        };
+
+
+
+        public CreateModel(RentDbContext context)
         {
             _context = context;
         }
@@ -38,6 +64,8 @@ namespace RazorRentCarDemo_NetCore.Pages.Garage
 
             _context.Car.Add(Car);
             await _context.SaveChangesAsync();
+
+            TempData["success"] = "Added succesfully";
 
             return RedirectToPage("./Index");
         }

@@ -65,6 +65,7 @@ namespace RazorRentCarDemo_NetCore.Pages.Garage
                     throw;
                 }
             }
+            TempData["success"] = "Updated succesfully";
 
             return RedirectToPage("./Index");
         }
